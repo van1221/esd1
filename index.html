@@ -1,18 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChargeFinder - EV Charging Made Easy</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChargeFinder</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 </head>
 <body>
-    ... (HTML content truncated for brevity)
-    <script src="js/app.js"></script>
-    <script src="js/stations.js"></script>
-    <script src="js/reservations.js"></script>
-    <script src="js/payments.js"></script>
+  <div class="container">
+    <div class="header">
+      <h1>⚡ ChargeFinder</h1>
+      <p>Your Ultimate EV Charging Companion</p>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab" onclick="showTab('stations')">🔍 Find Stations</button>
+      <button class="nav-tab" onclick="showTab('reservations')">📅 Reservations</button>
+      <button class="nav-tab" onclick="showTab('profile')">👤 Profile</button>
+      <button class="nav-tab" onclick="showTab('vehicles')">🚗 Vehicles</button>
+      <button class="nav-tab" onclick="showTab('charging-profiles')">⚙ Charging</button>
+      <button class="nav-tab" onclick="showTab('payment')">💳 Payment</button>
+      <button class="nav-tab" onclick="showTab('auth')">🔐 Login</button>
+      <button class="nav-tab" onclick="downloadSourceZip()">📦 Download Code</button>
+    </div>
+
+    <div id="stations" class="tab-content">
+      <h2>🔌 EV Charging Stations</h2>
+      <button onclick="searchStations()">Search Stations</button>
+      <div id="stationResults"></div>
+    </div>
+
+    <div id="reservations" class="tab-content">
+      <h2>📅 Reservations</h2>
+      <button onclick="createReservationPrompt()">New Reservation</button>
+      <div id="reservationsList"></div>
+    </div>
+
+    <div id="profile" class="tab-content">
+      <h2>👤 Profile</h2>
+      <p>Edit your profile details here.</p>
+    </div>
+
+    <div id="vehicles" class="tab-content">
+      <h2>🚗 My Vehicles</h2>
+      <button onclick="addVehiclePrompt()">Add Vehicle</button>
+      <div id="vehiclesList"></div>
+    </div>
+
+    <div id="charging-profiles" class="tab-content">
+      <h2>⚙ Charging Profiles</h2>
+      <button onclick="createChargingProfilePrompt()">New Profile</button>
+      <div id="chargingProfilesList"></div>
+    </div>
+
+    <div id="payment" class="tab-content">
+      <h2>💳 Payment</h2>
+      <button onclick="addPaymentMethodPrompt()">Add Payment Method</button>
+      <div id="paymentMethods"></div>
+    </div>
+
+    <div id="auth" class="tab-content">
+      <h2>🔐 Login / Signup</h2>
+      <input type="email" id="authEmail" placeholder="Email" />
+      <input type="password" id="authPassword" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <button onclick="signup()">Signup</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/stations.js"></script>
+  <script src="js/reservations.js"></script>
+  <script src="js/payment.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/vehicles.js"></script>
+  <script src="js/chargingProfiles.js"></script>
+
+  <script>
+    function downloadSourceZip() {
+      const files = [
+        "index.html",
+        "css/styles.css",
+        "js/app.js",
+        "js/stations.js",
+        "js/reservations.js",
+        "js/payment.js",
+        "js/auth.js",
+        "js/vehicles.js",
+        "js/chargingProfiles.js"
+      ];
+      const zip = new JSZip();
+      Promise.all(files.map(f =>
+        fetch(f).then(r => r.ok ? r.text() : Promise.reject(f)).then(txt => zip.file(f, txt))
+      ))
+      .then(() => zip.generateAsync({ type: "blob" }))
+      .then(blob => saveAs(blob, "ChargeFinder-source.zip"))
+      .catch(err => console.error("ZIP error:", err));
+    }
+  </script>
 </body>
 </html>
