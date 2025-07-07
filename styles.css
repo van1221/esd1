@@ -1,12 +1,57 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    color: #333;
+  margin: 0; padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #333;
 }
-... (CSS content truncated for brevity)
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.header { text-align: center; margin-bottom: 20px; }
+.nav-tabs {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 20px; justify-content: center;
+}
+.nav-tab {
+  padding: 10px 20px;
+  background: #e0e0e0;
+  border: none; cursor: pointer;
+  border-radius: 6px;
+}
+.nav-tab.active {
+  background: #4CAF50; color: white; font-weight: bold;
+}
+.tab-content {
+  display: none;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+.tab-content.active { display: block; }
+button, .btn {
+  padding: 10px 15px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+button:hover, .btn:hover { background-color: #45a049; }
+input, select, textarea {
+  width: 100%; padding: 10px;
+  margin: 5px 0 15px 0;
+  border-radius: 4px; border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+#stationResults, #reservationsList, #paymentMethods, #vehiclesList, #chargingProfilesList {
+  margin-top: 20px;
+}
+@media screen and (max-width: 600px) {
+  .nav-tabs { flex-direction: column; }
+  .tab-content { padding: 10px; }
+}
+
